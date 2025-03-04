@@ -93,7 +93,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: const EdgeInsets.only(top: 24.0),
                 child: const Text("Záznamy", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),),
               ),
-              Expanded(
+              _seznamZaznamu.length == 0 ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                child: Center(child: Text("Nic tady zatím není, přidejte záznam kliknutím na tlačítko +", textAlign: TextAlign.center, style: TextStyle(color: Colors.grey),)),
+              ) : Expanded(
                 child: ListView.builder(
                   itemCount: _seznamZaznamu.length,
                   itemBuilder: (context, index) {
@@ -119,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   },
                 ),
-              )
+              ),
             ],
           )
         ),
