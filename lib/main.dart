@@ -36,23 +36,25 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Zaznam> _seznamZaznamu = [];
 
   void _vypocitej() {
-    int i = 0;
-    _prumernaSpotreba = 0.0;
-    for (Zaznam zaznam in _seznamZaznamu){
-      if (i >= 1) {
-        _prumernaSpotreba += 100*_seznamZaznamu[i-1].palivo/(zaznam.stavTachometru - _seznamZaznamu[i-1].stavTachometru);
-      }
-      _prumernaCena += zaznam.cena;
-      i++;
-    };
-    _prumernaCena = _prumernaCena/_seznamZaznamu.length;
-    _prumernaSpotreba = _prumernaSpotreba/(_seznamZaznamu.length-1);
-    _prumernaCena = double.parse(_prumernaCena.toStringAsFixed(2));
-    _prumernaSpotreba = double.parse(_prumernaSpotreba.toStringAsFixed(2));
+    if (_seznamZaznamu.length >= 2) {
+      int i = 0;
+      _prumernaSpotreba = 0.0;
+      _prumernaCena = 0.0;
+      double _pocetLitru = 0.0;
+      for (Zaznam zaznam in _seznamZaznamu){
+        _pocetLitru += _seznamZaznamu[i].palivo;
+        _prumernaCena += zaznam.cena;
+        i++;
+      };
+      _prumernaSpotreba = _pocetLitru*100/(_seznamZaznamu[_seznamZaznamu.length-1].stavTachometru - _seznamZaznamu[0].stavTachometru);
+      _prumernaCena = _prumernaCena/_seznamZaznamu.length;
+      _prumernaCena = double.parse(_prumernaCena.toStringAsFixed(2));
+      _prumernaSpotreba = double.parse(_prumernaSpotreba.toStringAsFixed(2));
+    }
   }
   void _odstranZaznam(index) {
     _seznamZaznamu.removeAt(index);
-    _vypocitej();
+    setState(() {});
     setState(() {});
   }
 
